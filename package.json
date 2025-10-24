@@ -1,0 +1,13 @@
+{
+  "name": "windows-explorer",
+  "private": true,
+  "scripts": {
+    "dev:backend": "cd apps/we-be && bun run dev",
+    "dev:frontend": "cd apps/we-fe && bun run dev",
+    "dev": "concurrently \"bun run dev:backend\" \"bun run dev:frontend\""
+  },
+  "workspaces": ["apps/*", "packages/*"],
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

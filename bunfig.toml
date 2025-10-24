@@ -1,0 +1,6 @@
+[workspace]
+members = [
+  "apps/we-be",
+  "apps/we-fe",
+  "packages/shared"
+]
