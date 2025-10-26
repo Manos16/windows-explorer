@@ -1,9 +1,9 @@
 {
   "files": [],
   "references": [
-    { "path": "./apps/we-fe" },
-    { "path": "./apps/we-be" },
-    { "path": "./packages/shared" }
+    { "path": "apps/we-be" },
+    { "path": "apps/we-fe" },
+    { "path": "packages/shared" }
   ],
   "compilerOptions": {
     "target": "ESNext",
@@ -12,7 +12,7 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@shared/*": ["packages/shared/*"]
+      "@windows-explorer/*": ["packages/*/index.ts"]
     }
   }
 }

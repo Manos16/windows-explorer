@@ -7,7 +7,8 @@
     /* Path alias agar bisa import dari packages/shared */
     "baseUrl": ".",
     "paths": {
-      "@shared/*": ["../../packages/shared/*"]
+      "@shared/*": ["../../packages/shared/*"],
+      "@/*": ["src/*"]
     },
 
     /* Linting */

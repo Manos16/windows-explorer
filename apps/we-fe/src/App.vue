@@ -1,30 +1,45 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <MainLayout>
+    <div class="row q-col-gutter-md full-height">
+      <!-- SIDEBAR -->
+      <div class="col-3 q-pl-lg full-height" style="border-right: 1px solid #ccc; min-height: 96vh;">
+        <TreeSidebar ref="treeRef" @select-folder="handleSelectFolder" />
+      </div>
+
+      <div class="col-9">
+        <TableView
+            :folders="folders"
+            :files="files"
+            :loading="loading"
+            :currentFolderId="selectedFolderId"
+            :fetchContents="fetchContents"
+            @folder-added="handleFolderAdded"
+        />
+      </div>
+    </div>
+  </MainLayout>
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+<script setup lang="ts">
+import { ref, watchEffect } from 'vue'
+import TreeSidebar from './components/TreeSidebar.vue'
+import TableView from './components/TableView.vue'
+import { useFolderContents } from '@/composables/useFoldersContents'
+import MainLayout from "@/layouts/MainLayout.vue";
+
+const { folders, files, loading, fetchContents } = useFolderContents()
+const selectedFolderId = ref<number | null>(null)
+const treeRef = ref<InstanceType<typeof TreeSidebar> | null>(null)
+const handleSelectFolder = (id: number | null) => {
+  selectedFolderId.value = id
+  fetchContents(folderId)
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+
+watchEffect(() => {
+  fetchContents(selectedFolderId.value)
+})
+
+function handleFolderAdded() {
+  treeRef.value?.refreshTree?.()  // 👈 pastikan fungsi ini ada di TreeSidebar.vue
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+</script>
